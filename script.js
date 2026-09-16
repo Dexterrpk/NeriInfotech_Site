@@ -9,6 +9,90 @@ const charCount = document.querySelector('#charCount');
 const whatsappFloat = document.querySelector('.whatsapp-float');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Correção final da identidade visual: usa a imagem oficial como fundo recortado
+// pelo círculo, evitando distorção/corte causado por object-fit/zoom conflitantes.
+const logoFixStyle = document.createElement('style');
+logoFixStyle.id = 'neri-logo-fix';
+logoFixStyle.textContent = `
+  .brand,
+  .stage-logo-official,
+  .manifesto-logo{
+    background-image:url('logo_Infotech.png') !important;
+    background-repeat:no-repeat !important;
+    background-position:left center !important;
+    background-size:auto 100% !important;
+    overflow:hidden !important;
+    border-radius:50% !important;
+  }
+
+  .brand > img,
+  .stage-logo-official > img,
+  .manifesto-logo > img{
+    opacity:0 !important;
+    visibility:hidden !important;
+    pointer-events:none !important;
+  }
+
+  .brand{
+    width:62px !important;
+    height:62px !important;
+    flex:0 0 62px !important;
+    background-color:#fff !important;
+    box-shadow:0 10px 24px rgba(18,43,79,.12) !important;
+    border:1px solid rgba(18,109,255,.09) !important;
+  }
+
+  .stage-logo-official{
+    width:176px !important;
+    height:176px !important;
+    min-height:0 !important;
+    padding:0 !important;
+    background-color:#fff !important;
+    box-shadow:0 20px 50px rgba(0,0,0,.18) !important;
+  }
+
+  .manifesto-logo{
+    width:130px !important;
+    height:130px !important;
+    min-width:130px !important;
+    padding:0 !important;
+    background-color:#fff !important;
+    box-shadow:0 18px 40px rgba(0,0,0,.18) !important;
+  }
+
+  .footer-brand{
+    display:flex !important;
+    align-items:center !important;
+    gap:14px !important;
+  }
+
+  .footer-brand > img{
+    width:72px !important;
+    height:72px !important;
+    flex:0 0 72px !important;
+    border-radius:50% !important;
+    object-fit:cover !important;
+    object-position:left center !important;
+    background:#fff !important;
+    box-shadow:0 10px 24px rgba(18,43,79,.11) !important;
+    border:1px solid rgba(18,109,255,.08) !important;
+  }
+
+  @media(max-width:920px){
+    .brand{width:54px !important;height:54px !important;flex-basis:54px !important}
+    .stage-logo-official{width:152px !important;height:152px !important}
+    .manifesto-logo{width:116px !important;height:116px !important;min-width:116px !important}
+  }
+
+  @media(max-width:680px){
+    .brand{width:48px !important;height:48px !important;flex-basis:48px !important}
+    .stage-logo-official{width:126px !important;height:126px !important}
+    .manifesto-logo{width:102px !important;height:102px !important;min-width:102px !important}
+    .footer-brand > img{width:62px !important;height:62px !important;flex-basis:62px !important}
+  }
+`;
+document.head.appendChild(logoFixStyle);
+
 if (year) year.textContent = new Date().getFullYear();
 
 function updateScrollUI() {
