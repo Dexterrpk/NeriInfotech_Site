@@ -54,3 +54,120 @@ a{color:inherit}button,input,textarea,select{font:inherit}button{cursor:pointer}
 @media(max-width:920px){.site-header{padding:8px 0}.brand{width:54px;height:54px}.menu-toggle{display:block}.nav{position:fixed;inset:70px 18px auto;display:flex;flex-direction:column;align-items:stretch;gap:3px;padding:16px;border-radius:22px;background:rgba(255,255,255,.97);border:1px solid var(--line);box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(-10px);transition:.25s}.nav.open{opacity:1;pointer-events:auto;transform:none}.nav a{padding:11px 12px;font-size:13px}.nav-cta{text-align:center;justify-content:center}.hero{min-height:auto}.hero-layout,.business-layout,.sites-layout,.faq-layout,.quote-shell{grid-template-columns:1fr}.hero-copy{padding-top:25px}.hero-stage{min-height:540px}.stage-main{width:min(450px,78%)}.stage-logo-official{width:154px;height:154px;margin-top:50px}.section-heading{grid-template-columns:1fr;gap:24px}.business-layout,.sites-layout,.faq-layout{gap:52px}.sites-copy{order:-1}.manifesto-card{grid-template-columns:1fr}.manifesto-logo{width:118px;height:118px}.faq-intro{position:static}.process-line{grid-template-columns:1fr 1fr;row-gap:42px}.process-line::before{display:none}.quote-shell{padding:40px}.footer-top{grid-template-columns:1fr;gap:35px}}
 @media(max-width:680px){.container{width:min(100% - 28px,1180px)}.section{padding:82px 0}.hero{padding:112px 0 78px}.hero h1{font-size:clamp(44px,13vw,66px)}.hero-lead{font-size:16px}.hero-actions{flex-direction:column;align-items:stretch}.btn{width:100%}.hero-proof{grid-template-columns:1fr;gap:13px}.hero-proof>div{padding-bottom:12px;border-bottom:1px solid var(--line)}.hero-stage{min-height:455px;margin-top:10px}.stage-main{width:84%;padding:20px;border-radius:23px}.stage-logo-official{width:128px;height:128px;margin:42px auto 20px}.stage-message strong{font-size:27px}.stage-message span{font-size:8px}.stage-footer{display:none}.stage-mini{width:168px;padding:13px}.stage-mini-a{right:0;top:8%}.stage-mini-b{left:0;bottom:8%}.stage-orbit{display:none}.hero-scroll{display:none}.ticker-track{min-height:62px}.section-heading h2,.business h2,.sites h2,.manifesto h2,.faq h2,.quote h2{font-size:clamp(38px,11vw,54px)}.services-bento{grid-template-columns:1fr}.service-card,.service-featured{min-height:auto}.service-featured h3{font-size:31px}.art-terminal{position:relative;right:auto;bottom:auto;width:100%;margin-top:28px;transform:none}.service-card h3{margin-top:55px}.service-wide{display:block}.business-console{border-radius:20px}.console-row{grid-template-columns:32px 1fr}.console-row em{grid-column:2}.sites-showcase{min-height:430px}.device-window{width:92%}.device-page section{padding:42px 10px 35px}.device-page section strong{font-size:29px}.note-one{right:0;top:12%}.note-two{left:0;bottom:12%}.site-features{grid-template-columns:1fr}.process-line{grid-template-columns:1fr}.process-step{display:grid;grid-template-columns:58px 1fr;column-gap:15px}.process-step h3{margin:7px 0 6px}.process-step p{grid-column:2}.manifesto-card{padding:30px 22px;border-radius:26px}.manifesto-logo{width:104px;height:104px}.quote-shell{padding:28px 20px;border-radius:26px}.quote-form{grid-template-columns:1fr;padding:18px}.field,.field.full,.quote-form .full{grid-column:1}.whatsapp-float span{display:none}.whatsapp-float{width:48px;height:48px;justify-content:center;padding:0}.footer{padding-top:55px}.footer-nav{grid-template-columns:1fr 1fr}.footer-bottom{flex-direction:column}.brand{width:48px;height:48px}.footer-brand img{width:62px;height:62px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}}
+
+/* Refinamento 2026-09: logo circular sem corte + cards com acabamento premium */
+.brand,
+.stage-logo-official,
+.manifesto-logo,
+.footer-brand img{
+  position:relative;
+  isolation:isolate;
+  background:linear-gradient(145deg,#fff,#f8fbff);
+  box-shadow:0 14px 34px rgba(18,43,79,.13),inset 0 0 0 1px rgba(18,109,255,.06);
+}
+.brand img,
+.stage-logo-official img,
+.manifesto-logo img,
+.footer-brand img{
+  width:auto!important;
+  height:92%!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+  flex:none;
+}
+.brand img{height:90%!important}
+.stage-logo-official img{height:94%!important}
+.manifesto-logo img{height:94%!important}
+.footer-brand img{height:64px!important;width:64px!important;object-fit:cover!important;object-position:left center!important}
+
+.services-bento{gap:20px}
+.service-card{
+  border-color:#e2e8f0;
+  background:linear-gradient(180deg,#fff 0%,#fbfdff 100%);
+  box-shadow:0 8px 24px rgba(18,43,79,.035);
+  transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s ease,border-color .28s ease,background .28s ease;
+}
+.service-card::after{
+  content:"";
+  position:absolute;
+  inset:auto -18% -45% 45%;
+  height:190px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(18,109,255,.07),transparent 68%);
+  opacity:0;
+  transform:scale(.8);
+  transition:.35s ease;
+  pointer-events:none;
+}
+.service-card:hover{
+  transform:translateY(-7px);
+  box-shadow:0 22px 54px rgba(18,43,79,.11);
+  border-color:#cdd9e8;
+}
+.service-card:hover::after{opacity:1;transform:scale(1)}
+.service-card h3{line-height:1.06}
+.service-card p{line-height:1.72}
+.service-icon{
+  border:1px solid rgba(18,109,255,.08);
+  box-shadow:0 8px 20px rgba(18,109,255,.06);
+}
+.service-card>a{
+  position:relative;
+  z-index:2;
+  color:#183b6a;
+  padding-bottom:3px;
+  border-bottom:1px solid rgba(18,109,255,.18);
+}
+.service-featured{
+  border-color:#d9e6f7;
+  background:linear-gradient(145deg,#fbfdff 0%,#eef6ff 100%);
+}
+.service-dark{
+  background:linear-gradient(150deg,#07152f 0%,#0a2d60 68%,#0c3875 100%);
+  border-color:rgba(79,169,255,.22);
+  box-shadow:0 14px 35px rgba(7,21,47,.11);
+}
+.service-dark:hover{box-shadow:0 26px 58px rgba(7,21,47,.22);border-color:rgba(91,211,255,.34)}
+.service-accent{
+  background:linear-gradient(145deg,#eefbff 0%,#eef3ff 100%);
+  border-color:#d8e6f6;
+}
+.service-wide{background:linear-gradient(145deg,#fbfdff,#f5f9ff)}
+.business-stack span{box-shadow:0 6px 18px rgba(18,43,79,.045)}
+
+.hero-proof>div{
+  padding:14px 15px;
+  border-radius:16px;
+  background:rgba(255,255,255,.56);
+  border:1px solid rgba(216,226,239,.72);
+}
+.hero-proof{border-top:0;padding-top:0}
+.stage-main{box-shadow:0 34px 80px rgba(7,21,47,.22)}
+.stage-mini{box-shadow:0 15px 38px rgba(31,58,93,.10)}
+.business-console{box-shadow:0 34px 85px rgba(0,0,0,.24)}
+.console-row{transition:background .22s ease}
+.console-row:hover{background:rgba(255,255,255,.035)}
+.site-features>div{transition:.25s ease;box-shadow:0 7px 20px rgba(18,43,79,.035)}
+.site-features>div:hover{transform:translateY(-3px);border-color:#cad8e8;box-shadow:0 14px 32px rgba(18,43,79,.08)}
+.process-step{padding:0 12px}
+.step-marker{transition:.25s ease}
+.process-step:hover .step-marker{transform:translateY(-3px);border-color:#b8d3f3;box-shadow:0 12px 30px rgba(31,58,93,.12)}
+.faq-list details{transition:background .2s ease,padding .2s ease}
+.faq-list details[open]{background:rgba(255,255,255,.7);padding-left:16px;padding-right:16px;border-radius:16px}
+
+@media(max-width:1080px){
+  .service-card{min-height:290px}
+  .hero-proof>div{padding:12px}
+}
+@media(max-width:680px){
+  .brand img{height:88%!important}
+  .stage-logo-official img{height:92%!important}
+  .manifesto-logo img{height:92%!important}
+  .service-card{padding:24px;border-radius:22px}
+  .service-card:hover{transform:none}
+  .service-card::after{display:none}
+  .hero-proof>div{padding:13px 14px}
+  .site-features>div:hover{transform:none}
+  .faq-list details[open]{padding-left:12px;padding-right:12px}
+}
