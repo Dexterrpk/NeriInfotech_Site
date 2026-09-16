@@ -4,6 +4,9 @@ const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
 const year = document.querySelector('#year');
 const quoteForm = document.querySelector('#quoteForm');
+const messageField = document.querySelector('#mensagem');
+const charCount = document.querySelector('#charCount');
+const whatsappFloat = document.querySelector('.whatsapp-float');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (year) year.textContent = new Date().getFullYear();
@@ -42,29 +45,51 @@ document.addEventListener('click', event => {
 });
 
 if (!reducedMotion && 'IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(entries => {
+  const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       const delay = Number(entry.target.dataset.delay || 0);
       window.setTimeout(() => entry.target.classList.add('is-visible'), delay);
-      observer.unobserve(entry.target);
+      revealObserver.unobserve(entry.target);
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -35px 0px' });
-  document.querySelectorAll('.reveal').forEach(element => observer.observe(element));
+  document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
 } else {
   document.querySelectorAll('.reveal').forEach(element => element.classList.add('is-visible'));
 }
 
 if (!reducedMotion) {
-  const visual = document.querySelector('.brand-core');
-  const orbit = document.querySelector('.brand-orbit');
-  orbit?.addEventListener('pointermove', event => {
-    const rect = orbit.getBoundingClientRect();
-    const x = (event.clientX - rect.left) / rect.width - 0.5;
-    const y = (event.clientY - rect.top) / rect.height - 0.5;
-    if (visual) visual.style.transform = `rotate(-4deg) perspective(900px) rotateX(${y * -5}deg) rotateY(${x * 7}deg)`;
+  document.querySelectorAll('[data-tilt]').forEach(card => {
+    const original = getComputedStyle(card).transform === 'none' ? '' : getComputedStyle(card).transform;
+    card.addEventListener('pointermove', event => {
+      if (window.innerWidth < 920) return;
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      const base = card.classList.contains('stage-main') ? 'rotate(-2.5deg)' : 'rotate(-2deg)';
+      card.style.transform = `${base} perspective(1000px) rotateX(${y * -4}deg) rotateY(${x * 6}deg) translateY(-3px)`;
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.transform = card.classList.contains('stage-main') ? 'rotate(-2.5deg)' : (original || 'rotate(-2deg)');
+    });
   });
-  orbit?.addEventListener('pointerleave', () => { if (visual) visual.style.transform = 'rotate(-4deg)'; });
+
+  document.querySelectorAll('.magnetic').forEach(button => {
+    button.addEventListener('pointermove', event => {
+      if (window.innerWidth < 920) return;
+      const rect = button.getBoundingClientRect();
+      const x = event.clientX - rect.left - rect.width / 2;
+      const y = event.clientY - rect.top - rect.height / 2;
+      button.style.transform = `translate(${x * 0.06}px, ${y * 0.08}px)`;
+    });
+    button.addEventListener('pointerleave', () => { button.style.transform = ''; });
+  });
+}
+
+if (messageField && charCount) {
+  const updateCount = () => { charCount.textContent = String(messageField.value.length); };
+  messageField.addEventListener('input', updateCount);
+  updateCount();
 }
 
 quoteForm?.addEventListener('submit', event => {
@@ -73,7 +98,6 @@ quoteForm?.addEventListener('submit', event => {
   const nome = String(data.get('nome') || '').trim();
   const servico = String(data.get('servico') || '').trim();
   const mensagem = String(data.get('mensagem') || '').trim();
-
   if (!nome || !servico || !mensagem) return;
 
   const text = [
@@ -90,7 +114,6 @@ quoteForm?.addEventListener('submit', event => {
   window.open(url, '_blank', 'noopener,noreferrer');
 });
 
-// Mantém apenas um item do FAQ aberto por vez para a leitura ficar mais limpa.
 document.querySelectorAll('.faq-list details').forEach(item => {
   item.addEventListener('toggle', () => {
     if (!item.open) return;
@@ -99,3 +122,26 @@ document.querySelectorAll('.faq-list details').forEach(item => {
     });
   });
 });
+
+const sections = [...document.querySelectorAll('main section[id]')];
+const navLinks = [...document.querySelectorAll('.nav a[href^="#"]')];
+if ('IntersectionObserver' in window && sections.length) {
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
+    });
+  }, { rootMargin: '-35% 0px -55% 0px', threshold: 0 });
+  sections.forEach(section => sectionObserver.observe(section));
+}
+
+const quoteSection = document.querySelector('#orcamento');
+if (quoteSection && whatsappFloat && 'IntersectionObserver' in window) {
+  const floatObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      whatsappFloat.style.opacity = entry.isIntersecting ? '0' : '1';
+      whatsappFloat.style.pointerEvents = entry.isIntersecting ? 'none' : 'auto';
+    });
+  }, { threshold: 0.18 });
+  floatObserver.observe(quoteSection);
+}
