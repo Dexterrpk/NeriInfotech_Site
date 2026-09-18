@@ -112,8 +112,7 @@
 
     const url = `https://wa.me/5575999294419?text=${encodeURIComponent(text)}`;
     formStatus.textContent = 'Abrindo o WhatsApp com sua mensagem...';
-    const newTab = window.open(url, '_blank', 'noopener,noreferrer');
-    if (!newTab) window.location.href = url;
+    window.location.href = url;
   });
 
   document.querySelectorAll('.faq-list details').forEach(item => {
