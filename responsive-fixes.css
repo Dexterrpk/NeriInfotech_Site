@@ -1,0 +1,115 @@
+/* Correções de responsividade e cursor — carregadas no build do Netlify.
+   Mantidas separadas para reduzir risco de regressão no stylesheet principal. */
+
+/*
+ * O backdrop-filter no header fixo cria um novo containing block em alguns
+ * navegadores. Como o menu fullscreen também usa position: fixed, ele podia
+ * ficar preso à altura do header depois que a página era rolada.
+ */
+.site-header.scrolled{
+  background:rgba(4,10,18,.96)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+
+/* Menu fullscreen sempre relativo à viewport, inclusive após scroll. */
+.nav{
+  width:100vw!important;
+  height:100dvh!important;
+  min-height:100dvh!important;
+  max-height:100dvh!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+
+body.menu-open{
+  overflow:hidden!important;
+  touch-action:none;
+}
+
+/*
+ * O cursor usava blur no fundo e deixava o texto sob ele com aparência fosca.
+ * Mantém a interação, porém sem desfocar nem lavar o conteúdo da página.
+ */
+.cursor-ring,
+.cursor-ring.is-active{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  mix-blend-mode:normal!important;
+}
+
+.cursor-ring.is-active{
+  background:transparent!important;
+  border-color:rgba(120,224,255,.78)!important;
+  box-shadow:0 0 0 1px rgba(52,125,255,.12),0 0 24px rgba(52,125,255,.16);
+}
+
+.cursor-ring span{
+  color:#fff;
+  text-shadow:0 1px 4px #02060b,0 0 10px #02060b;
+}
+
+/* Tablets e notebooks menores: garante que o overlay nunca estoure a altura. */
+@media(max-width:880px){
+  .nav{
+    align-content:start!important;
+    padding-top:clamp(92px,14vh,124px)!important;
+    padding-bottom:42px!important;
+  }
+
+  .nav>a{
+    font-size:clamp(32px,min(10vw,7.6vh),52px)!important;
+    line-height:1!important;
+    min-width:0;
+  }
+}
+
+/* Celular: fontes e espaçamentos dimensionados também pela altura da tela. */
+@media(max-width:600px){
+  .nav{
+    padding:82px 18px 34px!important;
+  }
+
+  .nav::before{
+    top:66px!important;
+    left:18px!important;
+  }
+
+  .nav>a{
+    grid-template-columns:30px minmax(0,1fr)!important;
+    gap:12px!important;
+    padding:clamp(9px,1.9vh,13px) 0!important;
+    font-size:clamp(29px,min(10.5vw,7.2vh),46px)!important;
+    overflow:visible!important;
+  }
+}
+
+/* Mobile landscape ou telas muito baixas. */
+@media(max-height:700px){
+  .nav{
+    align-content:start!important;
+    padding-top:76px!important;
+    padding-bottom:26px!important;
+  }
+
+  .nav::before{
+    top:58px!important;
+  }
+
+  .nav>a{
+    padding:8px 0!important;
+    font-size:clamp(27px,6.2vh,42px)!important;
+    line-height:.96!important;
+  }
+}
+
+@media(max-height:520px) and (orientation:landscape){
+  .brand span{display:none!important}
+  .site-header{padding:7px 0!important}
+  .menu-toggle{width:42px!important;height:42px!important}
+  .nav{padding-top:58px!important;padding-bottom:18px!important}
+  .nav::before{display:none!important}
+  .nav>a{padding:5px 0!important;font-size:clamp(24px,8vh,34px)!important}
+}
