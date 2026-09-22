@@ -1,6 +1,6 @@
 [build]
   publish = "."
-  command = "cat responsive-fixes.css >> styles.css"
+  command = "cat responsive-fixes.css refinements.css >> styles.css && cat refinements.js >> script.js"
 
 [[headers]]
   for = "/*"
