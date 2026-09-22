@@ -1,0 +1,124 @@
+/* Refinamentos de UX/UI — mantém a identidade atual e reduz ruído visual. */
+
+/* A faixa pós-hero agora funciona como prova de processo, não como repetição de serviços. */
+.local-strip{position:relative}
+.strip-grid{animation-duration:32s!important}
+@media(hover:hover){.local-strip:hover .strip-grid{animation-play-state:paused}}
+
+/* Títulos ganham uma marca visual discreta, sem mudar a composição editorial. */
+.section-head h2 span,.prices-intro h2 span,.business-copy h2 span{
+  position:relative;
+  display:inline;
+  background-image:linear-gradient(90deg,rgba(71,219,255,.18),rgba(52,125,255,.08));
+  background-size:0 22%;
+  background-position:0 96%;
+  background-repeat:no-repeat;
+  transition:background-size .9s var(--ease);
+}
+.reveal.is-visible h2 span,.prices-intro.is-visible h2 span,.business-copy.is-visible h2 span{background-size:100% 22%}
+
+/* Painel do hero: entrada em sequência e hover sutil, sem exagero. */
+@media(prefers-reduced-motion:no-preference){
+  .is-ready .diagnostic-board.is-visible .board-row{animation:boardRowIn .72s var(--ease) both}
+  .is-ready .diagnostic-board.is-visible .board-row:nth-of-type(3){animation-delay:.08s}
+  .is-ready .diagnostic-board.is-visible .board-row:nth-of-type(4){animation-delay:.16s}
+  .is-ready .diagnostic-board.is-visible .board-row:nth-of-type(5){animation-delay:.24s}
+  .is-ready .diagnostic-board.is-visible .board-row:nth-of-type(6){animation-delay:.32s}
+  @keyframes boardRowIn{from{opacity:.25;transform:translateX(12px)}to{opacity:1;transform:none}}
+}
+.board-row{transition:background .3s var(--ease),padding-left .3s var(--ease)}
+@media(hover:hover){.board-row:hover{background:rgba(71,219,255,.045);padding-left:26px}}
+
+/* Serviços: foco no conteúdo ativo e CTA mais legível. */
+.service-row{position:relative}
+.service-row::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:0;
+  height:1px;
+  background:linear-gradient(90deg,var(--cyan),transparent);
+  transition:width .55s var(--ease);
+}
+.service-row.is-active::after{width:42%}
+.text-action{position:relative}
+.text-action::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-6px;
+  height:1px;
+  background:currentColor;
+  transform:scaleX(0);
+  transform-origin:right;
+  transition:transform .35s var(--ease);
+  opacity:.45;
+}
+.text-action:hover::after{transform:scaleX(1);transform-origin:left}
+
+/* Valores: hover menos brusco e sem parecer card. */
+.price-line{position:relative;overflow:hidden}
+.price-line::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:16px;
+  bottom:16px;
+  width:2px;
+  background:#153c70;
+  transform:scaleY(0);
+  transition:transform .3s var(--ease);
+}
+@media(hover:hover){.price-line:hover::before{transform:scaleY(1)}}
+
+/* Planos de site: luz acompanha o ponteiro, mantendo o layout intacto. */
+.site-plan{position:relative;isolation:isolate;overflow:hidden}
+.site-plan::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:radial-gradient(360px circle at var(--spot-x,50%) var(--spot-y,38%),rgba(71,219,255,.10),transparent 58%);
+  opacity:0;
+  transition:opacity .35s var(--ease);
+}
+@media(hover:hover){.site-plan:hover::before{opacity:1}}
+.site-plan button span{transition:transform .35s var(--ease)}
+.site-plan button:hover span{transform:translateX(5px)}
+
+/* Negócios: reduz sensação de elementos soltos e melhora leitura dos blocos. */
+.ops-board>div:not(.ops-head){transition:transform .35s var(--ease),border-color .35s var(--ease),background .35s var(--ease)}
+@media(hover:hover){
+  .ops-board>div:not(.ops-head):hover{transform:translateX(6px);border-color:rgba(140,231,255,.35)!important;background:rgba(3,15,29,.84)!important}
+}
+
+/* FAQ: abertura mais suave e hierarquia mais clara. */
+.faq-list details[open] p{animation:faqIn .38s var(--ease) both}
+@keyframes faqIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.faq-list summary{transition:color .25s var(--ease)}
+@media(hover:hover){.faq-list summary:hover{color:#153c70}}
+
+/* Instagram e rodapé: microinterações discretas. */
+.social-grid>a span,.footer-main>nav a{transition:transform .3s var(--ease),color .3s var(--ease)}
+.social-grid>a:hover span{display:inline-block;transform:translate(3px,-3px)}
+.footer-main>nav a:hover{transform:translateY(-1px)}
+
+/* Cursor: mais discreto, sem cobrir o texto. */
+.cursor-ring.is-active{width:64px!important;height:64px!important;margin:-32px 0 0 -32px!important;box-shadow:0 0 18px rgba(52,125,255,.12)!important}
+.cursor-ring span{font-size:7px!important;letter-spacing:.10em!important}
+
+/* Em telas menores, evita movimento que não agrega à leitura. */
+@media(max-width:880px){
+  .service-row::after{display:none}
+  .site-plan::before{display:none}
+  .section-head h2 span,.prices-intro h2 span,.business-copy h2 span{background-size:100% 18%}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .strip-grid{animation:none!important;transform:none!important}
+  .section-head h2 span,.prices-intro h2 span,.business-copy h2 span{background-size:100% 18%!important}
+  .faq-list details[open] p{animation:none!important}
+}
