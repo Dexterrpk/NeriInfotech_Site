@@ -11,29 +11,39 @@
   const year = document.querySelector('#year');
   if (year) year.textContent = String(new Date().getFullYear());
 
-  // Mantém a mesma navegação em todas as páginas sem duplicar marcação em cada arquivo.
-  if (nav && !nav.querySelector('a[href="/atende-ia/"]')) {
-    const contact = nav.querySelector('a[href="/contato/"]');
-    const productLink = document.createElement('a');
-    productLink.href = '/atende-ia/';
-    productLink.textContent = 'Atende IA';
-    nav.insertBefore(productLink, contact || null);
-  }
+  // Uma arquitetura única em todas as páginas: serviços, produto próprio e presença digital.
+  const navItems = [
+    ['Início','/'],
+    ['Serviços','/servicos/'],
+    ['Atende IA','/atende-ia/'],
+    ['Sites','/sites/'],
+    ['Para negócios','/negocios/'],
+    ['Sobre','/sobre/'],
+    ['Contato','/contato/']
+  ];
   if (nav) {
-    nav.querySelectorAll('a').forEach(link => {
+    while (nav.querySelectorAll(':scope > a').length < navItems.length) nav.append(document.createElement('a'));
+    [...nav.querySelectorAll(':scope > a')].forEach((link, index) => {
+      const item = navItems[index];
+      if (!item) { link.remove(); return; }
+      link.textContent = item[0];
+      link.href = item[1];
+      link.classList.toggle('nav-cta', index === navItems.length - 1);
       const url = new URL(link.href, location.href);
-      const current = url.pathname !== '/' && location.pathname.startsWith(url.pathname);
-      if (current || (url.pathname === '/' && location.pathname === '/')) link.setAttribute('aria-current', 'page');
+      const current = url.pathname !== '/' ? location.pathname.startsWith(url.pathname) : location.pathname === '/';
+      if (current) link.setAttribute('aria-current','page');
       else link.removeAttribute('aria-current');
     });
   }
+
   document.querySelectorAll('.footer nav').forEach(footerNav => {
-    if (footerNav.querySelector('a[href="/atende-ia/"]')) return;
-    const contact = footerNav.querySelector('a[href="/contato/"]');
-    const link = document.createElement('a');
-    link.href = '/atende-ia/';
-    link.textContent = 'Atende IA';
-    footerNav.insertBefore(link, contact || null);
+    if (!footerNav.querySelector('a[href="/atende-ia/"]')) {
+      const sites = footerNav.querySelector('a[href="/sites/"]');
+      const link = document.createElement('a');
+      link.href = '/atende-ia/';
+      link.textContent = 'Atende IA';
+      footerNav.insertBefore(link, sites || footerNav.firstChild);
+    }
   });
 
   const curtain = document.createElement('div');
