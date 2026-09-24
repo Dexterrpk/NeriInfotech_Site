@@ -11,7 +11,7 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Resource-Policy = "same-origin"
-    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'sha256-DINtDD99D1ylbGOjSqOLDMLtjyyn/BKkufwLI07+pnw='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' https://wa.me; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' 'sha256-DINtDD99D1ylbGOjSqOLDMLtjyyn/BKkufwLI07+pnw=' 'sha256-QzSRF6XL+WGh13q5FU9eb83jW48TEG8zwU8cSs/ofiU='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' https://wa.me; upgrade-insecure-requests"
 
 [[headers]]
   for = "/*.html"
