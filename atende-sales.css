@@ -41,7 +41,7 @@
 .plan-price strong{font-size:18px;color:#f3f7fa;white-space:nowrap}
 .plan-row .plan-cta{justify-self:end;text-decoration:none;font-size:10px;font-weight:800;color:#8fe5f8;border-bottom:1px solid rgba(143,229,248,.45);padding-bottom:3px}
 .plan-row.featured{background:linear-gradient(90deg,rgba(52,125,255,.08),transparent);box-shadow:inset 2px 0 0 #4bcff4}
-.plan-row.featured h3::after{content:"mais escolhido";display:inline-block;margin-left:10px;vertical-align:middle;font:800 7px/1.2 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.11em;color:#7fdff5;border:1px solid rgba(127,223,245,.28);padding:5px 7px;border-radius:999px}
+.plan-row.featured h3::after{content:"destaque";display:inline-block;margin-left:10px;vertical-align:middle;font:800 7px/1.2 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.11em;color:#7fdff5;border:1px solid rgba(127,223,245,.28);padding:5px 7px;border-radius:999px}
 .plan-footnote{margin:20px 0 0;color:#6f8094;font-size:10px;line-height:1.7}
 
 .sales-audience{display:grid;grid-template-columns:repeat(3,1fr);gap:38px}
