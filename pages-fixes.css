@@ -1,0 +1,88 @@
+/* Ajustes responsivos compartilhados pelas páginas internas e pelo novo produto. */
+.inner-page .container{width:var(--page-max);margin-inline:auto}
+.inner-page *{min-width:0}
+.subhero h1,.editorial-head h2,.story-sticky h2,.page-band h2,.feature-block h3,.editorial-item h3,.contact-copy h2{overflow-wrap:break-word;text-wrap:balance}
+.subhero-lead,.editorial-head p,.feature-block p,.editorial-item p,.story-step p,.page-band p{max-width:100%}
+.editorial-meta strong,.editorial-meta small,.contact-links a,.price-note-line{overflow-wrap:anywhere}
+.whatsapp-float{max-width:calc(100vw - 24px);bottom:max(12px,env(safe-area-inset-bottom));right:max(12px,env(safe-area-inset-right))}
+
+/* O menu precisa continuar utilizável com sete itens e em telas baixas. */
+.inner-page .nav{overflow-y:auto!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+@media(max-height:760px){
+  .inner-page .nav{align-content:start!important;padding-top:74px!important;padding-bottom:24px!important}
+  .inner-page .nav::before{top:58px!important}
+  .inner-page .nav>a{padding:7px 0!important;font-size:clamp(26px,6.1vh,40px)!important;line-height:.96!important}
+}
+@media(max-height:520px) and (orientation:landscape){
+  .inner-page .nav{padding-top:54px!important}
+  .inner-page .nav::before{display:none!important}
+  .inner-page .nav>a{padding:4px 0!important;font-size:clamp(22px,7.2vh,31px)!important}
+}
+
+/* Blocos de conteúdo não podem forçar overflow em celulares estreitos. */
+@media(max-width:600px){
+  .editorial-meta{width:100%}
+  .price-note-line{align-items:flex-start;flex-wrap:wrap}
+  .price-note-line strong{margin-left:auto}
+  .contact-links a{flex-direction:column;gap:5px}
+  .contact-links span{text-align:left}
+  .page-band .button{width:100%;white-space:normal;text-align:center}
+  .feature-block{min-height:0!important}
+  .footer-main>nav{row-gap:14px!important}
+}
+@media(max-width:380px){
+  .subhero h1{font-size:clamp(46px,15vw,60px)!important;line-height:.88!important}
+  .editorial-head h2,.story-sticky h2,.contact-copy h2{font-size:clamp(40px,12vw,54px)!important}
+  .editorial-item h3{font-size:32px!important}
+  .story-step h3{font-size:29px!important}
+  .page-band h2{font-size:clamp(40px,12vw,54px)!important}
+  .footer-brand{gap:12px!important}
+}
+
+/* Neri Atende IA ------------------------------------------------------- */
+.product-hero{align-items:center;padding-bottom:82px}
+.product-hero-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(420px,1.1fr);gap:68px;align-items:center;position:relative;z-index:2}
+.product-status{display:flex;align-items:flex-start;gap:10px;max-width:620px;margin:28px 0 0;color:#74869a;font-size:11px;line-height:1.65}
+.product-status>span{width:8px;height:8px;border-radius:50%;background:#4bd9ad;box-shadow:0 0 0 6px rgba(75,217,173,.09);margin-top:5px;flex:0 0 auto}
+.product-console{border:1px solid rgba(255,255,255,.12);background:#07111c;box-shadow:0 36px 100px rgba(0,0,0,.35);overflow:hidden;min-height:510px}
+.product-console-bar{height:50px;display:flex;align-items:center;gap:7px;padding:0 18px;border-bottom:1px solid rgba(255,255,255,.08);color:#66788f;text-transform:uppercase;letter-spacing:.14em;font-size:8px}
+.product-console-bar i{width:7px;height:7px;border-radius:50%;background:#29425c}.product-console-bar span{margin-left:10px}
+.product-console-body{display:grid;grid-template-columns:150px 1fr;min-height:458px}
+.product-console aside{display:flex;flex-direction:column;gap:7px;padding:22px 14px;border-right:1px solid rgba(255,255,255,.08);background:#050c15}
+.product-console aside strong{margin:0 8px 14px;color:#78dcf5;font:400 16px Georgia,serif}
+.product-console aside span{padding:9px 10px;border-radius:8px;color:#75859a;font-size:9px}.product-console aside span.active{background:rgba(52,125,255,.12);color:#ddecf6}
+.product-console-main{display:flex;flex-direction:column;padding:22px;min-width:0}
+.product-console-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.product-console-head div{display:flex;flex-direction:column;gap:4px}.product-console-head small{font-size:8px;letter-spacing:.14em;color:#66788f}.product-console-head strong{font:400 22px Georgia,serif}.product-console-head b{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:#65ddb8;background:rgba(75,217,173,.09);border:1px solid rgba(75,217,173,.16);padding:7px 9px;border-radius:999px}
+.product-chat{display:grid;gap:11px;padding:24px 0}.product-chat p{width:min(88%,430px);margin:0;padding:12px 14px;background:#101d2b;color:#aebccd;font-size:10px;line-height:1.55;border:1px solid rgba(255,255,255,.06)}.product-chat p span{display:block;margin-bottom:4px;font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:#65788e}.product-chat p.ai{justify-self:end;background:rgba(52,125,255,.1);border-color:rgba(52,125,255,.17);color:#d9e9f4}.product-chat p.human{width:100%;background:rgba(75,217,173,.07);border-color:rgba(75,217,173,.16);color:#aeead5}
+.product-console-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto}.product-console-stats div{padding:14px;border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.018)}.product-console-stats small{display:block;font-size:7px;letter-spacing:.12em;color:#62748a;margin-bottom:5px}.product-console-stats strong{font-size:10px;color:#bdc9d6}
+
+/* Destaque do produto na Home sem competir com o hero. */
+.atende-home-callout{position:relative;padding:104px 0;background:#06101a;color:#f4f7f8;overflow:hidden;border-block:1px solid rgba(255,255,255,.08)}
+.atende-home-callout::before{content:"";position:absolute;width:620px;height:620px;border-radius:50%;right:-240px;top:-280px;background:radial-gradient(circle,rgba(52,125,255,.17),transparent 65%);pointer-events:none}
+.atende-home-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);gap:72px;align-items:end}
+.atende-home-copy small{display:block;margin-bottom:18px;color:#7fdff5;font-size:9px;font-weight:800;letter-spacing:.17em;text-transform:uppercase}
+.atende-home-copy h2{margin:0;max-width:850px;font:400 clamp(48px,6.4vw,88px)/.92 Georgia,"Times New Roman",serif;letter-spacing:-.055em;text-wrap:balance}.atende-home-copy h2 span{color:#7fdff5}
+.atende-home-copy p{max-width:700px;margin:24px 0 0;color:#91a1b4;line-height:1.8}
+.atende-home-actions{display:flex;flex-direction:column;align-items:flex-start;gap:18px}.atende-home-points{display:grid;gap:0;width:100%;border-top:1px solid rgba(255,255,255,.09)}.atende-home-points span{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.09);color:#8191a4;font-size:10px}.atende-home-points b{color:#dbe7ef;font-weight:700;margin-right:8px}
+
+@media(max-width:900px){
+  .product-hero-layout,.atende-home-grid{grid-template-columns:1fr;gap:46px}
+  .product-console{min-height:470px}
+}
+@media(max-width:600px){
+  .product-hero{padding-bottom:58px}
+  .product-console{min-height:0}
+  .product-console-body{grid-template-columns:1fr;min-height:0}
+  .product-console aside{display:grid;grid-template-columns:repeat(3,1fr);border-right:0;border-bottom:1px solid rgba(255,255,255,.08);padding:14px 12px;gap:5px}
+  .product-console aside strong{grid-column:1/-1;margin:0 5px 6px}.product-console aside span{padding:7px 5px;text-align:center;font-size:8px}
+  .product-console-main{padding:16px}.product-console-head strong{font-size:19px}.product-console-head b{white-space:nowrap}
+  .product-chat p{width:94%}.product-chat p.human{width:100%}
+  .product-console-stats{grid-template-columns:1fr}
+  .atende-home-callout{padding:78px 0}.atende-home-grid{gap:38px}.atende-home-actions{width:100%}.atende-home-actions .button{width:100%}
+}
+@media(max-width:380px){
+  .product-console aside{grid-template-columns:repeat(2,1fr)}
+  .product-console-head{flex-direction:column}.product-console-head b{align-self:flex-start}
+}
+@media(prefers-reduced-motion:reduce){.product-console,.atende-home-callout *{transition:none!important;animation:none!important}}
