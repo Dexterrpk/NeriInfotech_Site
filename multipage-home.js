@@ -38,7 +38,7 @@
   setHref('.prices-intro .button','/servicos/','Ver todos os serviços');
   setHref('.business-copy .button','/negocios/','Ver soluções para negócios');
 
-  // Produto próprio ganha destaque sem transformar a Home em outra landing page.
+  // Produto próprio ganha destaque comercial sem transformar a Home em uma landing page gigante.
   if (!document.querySelector('.atende-home-callout')) {
     const anchor = document.querySelector('#negocios') || document.querySelector('.social-callout');
     if (anchor?.parentNode) {
@@ -48,18 +48,18 @@
       section.innerHTML = `
         <div class="container atende-home-grid">
           <div class="atende-home-copy reveal">
-            <small>Produto Neri InfoTech</small>
-            <h2 id="atende-home-title">Atendimento no WhatsApp com <span>IA e controle humano.</span></h2>
-            <p>O Neri Atende IA reúne conversas, clientes, catálogo, agenda e conhecimento do negócio em uma plataforma própria. A IA apoia o atendimento e a equipe assume quando precisa.</p>
+            <small>Neri Atende IA · produto próprio</small>
+            <h2 id="atende-home-title">Seu WhatsApp pode atender melhor <span>sem prender você o dia inteiro.</span></h2>
+            <p>Responda dúvidas, apresente produtos e serviços, organize clientes e agenda e recupere oportunidades com apoio de IA. Quando a conversa pedir uma pessoa, sua equipe assume.</p>
           </div>
           <div class="atende-home-actions reveal" data-delay="80">
-            <div class="atende-home-points" aria-label="Principais recursos">
-              <span><b>01</b>Conversas e atendimento humano</span>
-              <span><b>02</b>Catálogo e clientes</span>
-              <span><b>03</b>Agenda e conhecimento da IA</span>
-              <span><b>04</b>WhatsApp e gestão por empresa</span>
+            <div class="atende-home-points" aria-label="Principais benefícios">
+              <span><b>01</b>Respostas com as informações do negócio</span>
+              <span><b>02</b>Catálogo, clientes e agenda organizados</span>
+              <span><b>03</b>Recuperação de oportunidades nos planos compatíveis</span>
+              <span><b>04</b>Controle humano das conversas</span>
             </div>
-            <a class="button button-light" href="/atende-ia/">Conhecer o Neri Atende IA <span aria-hidden="true">↗</span></a>
+            <a class="button button-light" href="/atende-ia/">Conhecer o Neri Atende IA e os planos <span aria-hidden="true">↗</span></a>
           </div>
         </div>`;
       anchor.parentNode.insertBefore(section, anchor);
