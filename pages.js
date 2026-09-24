@@ -11,36 +11,81 @@
   const year = document.querySelector('#year');
   if (year) year.textContent = String(new Date().getFullYear());
 
+  // Mantém a mesma navegação em todas as páginas sem duplicar marcação em cada arquivo.
+  if (nav && !nav.querySelector('a[href="/atende-ia/"]')) {
+    const contact = nav.querySelector('a[href="/contato/"]');
+    const productLink = document.createElement('a');
+    productLink.href = '/atende-ia/';
+    productLink.textContent = 'Atende IA';
+    nav.insertBefore(productLink, contact || null);
+  }
+  if (nav) {
+    nav.querySelectorAll('a').forEach(link => {
+      const url = new URL(link.href, location.href);
+      const current = url.pathname !== '/' && location.pathname.startsWith(url.pathname);
+      if (current || (url.pathname === '/' && location.pathname === '/')) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  }
+  document.querySelectorAll('.footer nav').forEach(footerNav => {
+    if (footerNav.querySelector('a[href="/atende-ia/"]')) return;
+    const contact = footerNav.querySelector('a[href="/contato/"]');
+    const link = document.createElement('a');
+    link.href = '/atende-ia/';
+    link.textContent = 'Atende IA';
+    footerNav.insertBefore(link, contact || null);
+  });
+
   const curtain = document.createElement('div');
   curtain.className = 'page-curtain';
   curtain.setAttribute('aria-hidden','true');
   body.append(curtain);
+  addEventListener('pageshow', () => body.classList.remove('is-leaving'));
 
+  let scrollPending = false;
   const updateScroll = () => {
     const max = Math.max(1, doc.scrollHeight - innerHeight);
     const pct = Math.min(100, Math.max(0, scrollY / max * 100));
     progress?.style.setProperty('--progress', `${pct}%`);
     header?.classList.toggle('scrolled', scrollY > 24);
+    scrollPending = false;
+  };
+  const requestScrollUpdate = () => {
+    if (scrollPending) return;
+    scrollPending = true;
+    requestAnimationFrame(updateScroll);
   };
   updateScroll();
-  addEventListener('scroll', updateScroll, {passive:true});
+  addEventListener('scroll', requestScrollUpdate, {passive:true});
 
-  const closeMenu = () => {
+  let previousFocus = null;
+  const closeMenu = (restoreFocus = false) => {
     nav?.classList.remove('open');
     toggle?.setAttribute('aria-expanded','false');
     toggle?.setAttribute('aria-label','Abrir menu');
     body.classList.remove('menu-open');
+    if (restoreFocus && previousFocus instanceof HTMLElement) previousFocus.focus({preventScroll:true});
   };
   toggle?.addEventListener('click', () => {
     const open = !nav?.classList.contains('open');
+    if (open) previousFocus = document.activeElement;
     nav?.classList.toggle('open', open);
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
     body.classList.toggle('menu-open', open);
     if (open) setTimeout(() => nav?.querySelector('a')?.focus(), 250);
   });
-  nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-  addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+  nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => closeMenu(false)));
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape' && nav?.classList.contains('open')) closeMenu(true);
+    if (e.key !== 'Tab' || !nav?.classList.contains('open')) return;
+    const focusable = [toggle, ...(nav?.querySelectorAll('a') || [])].filter(Boolean);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 
   const reveals = document.querySelectorAll('.page-reveal');
   if (!reduced && 'IntersectionObserver' in window) {
@@ -68,7 +113,8 @@
     link.addEventListener('click', e => {
       if (reduced || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || link.target === '_blank') return;
       const url = new URL(link.href, location.href);
-      if (url.origin !== location.origin || url.pathname === location.pathname) return;
+      if (url.origin !== location.origin || (url.pathname === location.pathname && url.search === location.search && !url.hash)) return;
+      if (url.pathname === location.pathname && url.hash) return;
       e.preventDefault();
       body.classList.add('is-leaving');
       setTimeout(() => { location.href = url.href; }, 300);
@@ -76,9 +122,18 @@
   });
 
   const serviceField = document.querySelector('#servico');
+  if (serviceField && ![...serviceField.options].some(o => o.value === 'Neri Atende IA' || o.textContent.trim() === 'Neri Atende IA')) {
+    const option = new Option('Neri Atende IA', 'Neri Atende IA');
+    const other = [...serviceField.options].find(o => o.textContent.trim() === 'Outro');
+    serviceField.add(option, other || null);
+  }
   const queryService = new URLSearchParams(location.search).get('servico');
   if (serviceField && queryService) {
-    const option = [...serviceField.options].find(o => o.value === queryService || o.textContent.trim() === queryService);
+    let option = [...serviceField.options].find(o => o.value === queryService || o.textContent.trim() === queryService);
+    if (!option && queryService.length <= 80) {
+      option = new Option(queryService, queryService);
+      serviceField.add(option, 1);
+    }
     if (option) serviceField.value = option.value || option.textContent.trim();
   }
 
@@ -86,7 +141,10 @@
   const msg = document.querySelector('#mensagem');
   const count = document.querySelector('#charCount');
   const status = document.querySelector('#formStatus');
-  if (msg && count) msg.addEventListener('input', () => count.textContent = String(msg.value.length));
+  if (msg && count) {
+    count.textContent = String(msg.value.length);
+    msg.addEventListener('input', () => count.textContent = String(msg.value.length));
+  }
   form?.addEventListener('submit', e => {
     e.preventDefault();
     const name = document.querySelector('#nome')?.value.trim() || '';
