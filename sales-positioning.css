@@ -1,0 +1,24 @@
+/* Posicionamento comercial do Neri Atende IA na marca Neri InfoTech. */
+.nav>a[href="/atende-ia/"]{color:#79dcf4}
+.nav>a[href="/atende-ia/"][aria-current="page"]{color:#a9efff}
+
+.hero-product-link{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;align-items:center;gap:10px 14px;max-width:780px;margin-top:22px;padding:13px 15px;border:1px solid rgba(52,125,255,.18);background:rgba(7,20,38,.035);text-decoration:none;color:inherit;transition:border-color .3s ease,background .3s ease,transform .3s ease}
+.hero-product-link>span{font-size:8px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#276fdb}
+.hero-product-link>strong{font-size:12px;white-space:nowrap}
+.hero-product-link>small{font-size:10px;color:#647487;line-height:1.45}
+.hero-product-link>b{font-size:9px;color:#276fdb;white-space:nowrap}
+@media(hover:hover){.hero-product-link:hover{transform:translateY(-2px);border-color:rgba(52,125,255,.34);background:rgba(52,125,255,.045)}}
+.atende-home-secondary{font-size:10px;font-weight:800;color:#8edff4;text-decoration:none;border-bottom:1px solid rgba(142,223,244,.35);padding-bottom:3px}
+
+@media(max-width:760px){
+  .hero-product-link{grid-template-columns:auto 1fr;gap:6px 10px}
+  .hero-product-link>span{grid-column:1}
+  .hero-product-link>strong{grid-column:2}
+  .hero-product-link>small{grid-column:1/-1}
+  .hero-product-link>b{grid-column:1/-1;margin-top:2px}
+}
+@media(max-width:480px){
+  .hero-product-link{margin-top:18px;padding:12px}
+  .hero-product-link>strong{white-space:normal}
+}
+@media(prefers-reduced-motion:reduce){.hero-product-link{transition:none!important}}
